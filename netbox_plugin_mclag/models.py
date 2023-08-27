@@ -1,5 +1,6 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.urls import reverse
 from netbox.models import NetBoxModel
 
 class McDomain(NetBoxModel):
@@ -12,6 +13,8 @@ class McDomain(NetBoxModel):
     )
     def __str__(self):
         return self.name
+    def get_absolute_url(self):
+        return reverse('plugins:netbox_plugin_mclag:domain', args=[self.pk])
 
 class McLag(NetBoxModel):
     name = models.CharField(max_length=100)
@@ -24,3 +27,5 @@ class McLag(NetBoxModel):
     )
     def __str__(self):
         return self.name
+    def get_absolute_url(self):
+        return reverse('plugins:netbox_plugin_mclag:mclag', args=[self.pk])

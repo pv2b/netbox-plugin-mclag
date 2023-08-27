@@ -1,6 +1,8 @@
 from django import forms
 
 from netbox.forms import NetBoxModelForm
+from utilities.forms.fields import DynamicModelMultipleChoiceField
+from dcim.models import Interface
 from .models import McDomain, McLag
 
 class McDomainForm(NetBoxModelForm):
@@ -11,7 +13,10 @@ class McDomainForm(NetBoxModelForm):
 class McLagForm(NetBoxModelForm):
     interfaces = DynamicModelMultipleChoiceField(
         queryset = Interface.objects.all(),
-        selector = True
+        selector = True,
+        query_params = {
+            'device__mc_domains': '$mc_domain'
+        }
     )
     class Meta:
         model = McLag

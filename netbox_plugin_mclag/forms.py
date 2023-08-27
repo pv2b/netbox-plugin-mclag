@@ -9,6 +9,10 @@ class McDomainForm(NetBoxModelForm):
         fields = ('name', 'domain_id', 'description', 'devices', 'tags')
 
 class McLagForm(NetBoxModelForm):
+    interfaces = DynamicModelMultipleChoiceField(
+        queryset = Interface.objects.all(),
+        selector = True
+    )
     class Meta:
         model = McLag
         fields = ('name', 'lag_id', 'description', 'mc_domain', 'tags', 'interfaces')

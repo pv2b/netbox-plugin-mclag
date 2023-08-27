@@ -30,35 +30,35 @@ The plugin itself aims be vendor-neutral, and to use vendor-neutral terminology,
 
 ## Data model
 
-This plugin will creates two new data models, a *Multi-Chassis Link Aggregation Domain* and an *Multi-Chassis Link Aggregation Group*.
+This plugin will creates two new data models, a *Multi-Chassis Domain* and an *Multi-Chassis Link Aggregation Group*.
 
-A *Multi-Chassis Link Aggregation Domain* groups two or more devices that participate in creating a *Multi-Chassis Link Aggregation Group*. Optionally, a *Domain ID* may be added here to hold any vendor-specific ID required for configuration of the domain.
+A *Multi-Chassis Domain* groups two or more devices that participate in creating a *Multi-Chassis Link Aggregation Group*. Optionally, a *Domain ID* may be added here to hold any vendor-specific ID required for configuration of the domain.
 
 A *Multi-Chassis Link Aggregation Group* groups two or more LAG interfaces on domain member devices. Optionally, a *Group ID* may be added here to hold any vendor-specific ID required for configuration of the group.
 
-To clarify, each switch in the Multi-Chassis Link Aggregation Domain will need a regular NetBox LAG interface created, typically just with a single physical interface associated with it. These LAGs are then grouped together by the data models described above.
+To clarify, each switch in the Multi-Chassis Domain will need a regular NetBox LAG interface created, typically just with a single physical interface associated with it. These LAGs are then grouped together by the data models described above.
 
 Here is an example configuration of an MC-LAG setup containing two peer devices, each with one physical participating in a single LAG, using Cisco Nexus vPC terminology.
 
-  * A *Multi-Chassis Link Aggregation Domain* named *My VPC Domain*, with *Domain ID* set to 100. This corresponds to the Cisco vPC Domain ID.
+  * A *Multi-Chassis Domain* named *My VPC Domain*, with *Domain ID* set to 100. This corresponds to the Cisco vPC Domain ID.
   * A *Multi-Chassis Link Aggregation Group* named *My VPC Group*, with *Group ID* set to 200. This corresponds to the Cisco VPC number assigned to the virtual port channel.
   * On each member device *Switch1* and *Switch2*
     * A LAG interface named *Po200*, representing the local port channel configuration.
     * A physical interface named *Te1/0/1* which is a member of the *Po200* LAG.
 
-If more configuration fields beyond an ID are required on the *Multi-Chassis Link Aggregation Domain* or *Multi-Chassis Link Aggregation Group* objects, they may be added as [custom fields](https://docs.netbox.dev/en/stable/customization/custom-fields/) by the user.
+If more configuration fields beyond an ID are required on the *Multi-Chassis Domain* or *Multi-Chassis Link Aggregation Group* objects, they may be added as [custom fields](https://docs.netbox.dev/en/stable/customization/custom-fields/) by the user.
 
 ## Functionality
 
 The following functionality must be offered by this plugin to create a minimum viable product:
 
-  * The ability to view/create/update/delete *Multi-Chassis Link Aggregation Domain* objects through the web UI and by API.
+  * The ability to view/create/update/delete *Multi-Chassis Domain* objects through the web UI and by API.
   * The ability to view/create/update/delete *Multi-Chassis Link Aggregation Group* objects through the web UI and by API.
-  * Adds a "MC-LAG" tab to the interface view. This only shows up if the interface's device is part a *Multi-Chassis Link Aggregation Domain*. This view will show:
+  * Adds a "MC-LAG" tab to the interface view. This only shows up if the interface's device is part a *Multi-Chassis Domain*. This view will show:
     * If the interface is a physical interface and has no associated LAG interface, show a descriptive error suggesting the user to create a LAG and add the interface to that LAG first.
     * If the interface is a LAG, and has no associated physical interface, show a descriptive error suggesting the user to associate local device interfaces to that LAG.
     * If the LAG on the local device is not connected to a *Multi-Chassis Link Aggregation Group*, show an informative message that informs the user that this LAG is not part of a *Multi-Chassis Link Aggregation Group*. For convenience, still show a list of associated physical interfaces on the local device.
-    * If the LAG on the local device is connected to a *Multi-Chassis Link Aggregation Group*, show cards for the *Multi-Chassis Link Aggregation Group*, and the associated *Multi-Chassis Link Aggregation Domain*, along with a list view of associated physical interfaces.
+    * If the LAG on the local device is connected to a *Multi-Chassis Link Aggregation Group*, show cards for the *Multi-Chassis Link Aggregation Group*, and the associated *Multi-Chassis Domain*, along with a list view of associated physical interfaces.
   * Validated ability to generate vPC configurations for the Cisco Nexus platform, as a proof of completeness of the data model, including a provided template sample for this platform.
 
 ## Acknowledgements and references

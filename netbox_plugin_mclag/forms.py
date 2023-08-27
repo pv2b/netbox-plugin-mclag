@@ -11,4 +11,4 @@ class McDomainForm(NetBoxModelForm):
 class McLagForm(NetBoxModelForm):
     class Meta:
         model = McLag
-        fields = ('name', 'lag_id', 'description', 'mc_domain', 'tags')
+        fields = ('name', 'lag_id', 'description', 'mc_domain', 'tags', 'interfaces')

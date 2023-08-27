@@ -28,6 +28,10 @@ class McLag(NetBoxModel):
         on_delete=models.CASCADE,
         related_name="mc_lags"
     )
+    interfaces = models.ManyToManyField(
+        to='dcim.Interface',
+        related_name="mc_lags"
+    )
     def __str__(self):
         return self.name
     def get_absolute_url(self):

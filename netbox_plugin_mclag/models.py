@@ -14,7 +14,7 @@ class McDomain(NetBoxModel):
     def __str__(self):
         return self.name
     def get_absolute_url(self):
-        return reverse('plugins:netbox_plugin_mclag:domain', args=[self.pk])
+        return reverse('plugins:netbox_plugin_mclag:mcdomain', args=[self.pk])
     class Meta:
         verbose_name="Multi-Chassis Domain"
         verbose_name_plural="Multi-Chassis Domains"

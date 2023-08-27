@@ -15,6 +15,9 @@ class McDomain(NetBoxModel):
         return self.name
     def get_absolute_url(self):
         return reverse('plugins:netbox_plugin_mclag:domain', args=[self.pk])
+    class Meta:
+        verbose_name="Multi-Chassis Domain"
+        verbose_name_plural="Multi-Chassis Domains"
 
 class McLag(NetBoxModel):
     name = models.CharField(max_length=100)
@@ -29,3 +32,6 @@ class McLag(NetBoxModel):
         return self.name
     def get_absolute_url(self):
         return reverse('plugins:netbox_plugin_mclag:mclag', args=[self.pk])
+    class Meta:
+        verbose_name="Multi-Chassis Link Aggregation Group"
+        verbose_name_plural="Multi-Chassis Link Aggregation Groups"

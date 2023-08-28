@@ -2,6 +2,7 @@ from netbox.views import generic
 from . import forms, models, tables
 from dcim.models import Interface
 from dcim.tables.devices import InterfaceTable
+from .filtersets import McDomainFilterSet, McLagFilterSet
 from .tables import McLagTable
 
 class McDomainView(generic.ObjectView):
@@ -17,6 +18,7 @@ class McDomainView(generic.ObjectView):
 class McDomainListView(generic.ObjectListView):
     queryset = models.McDomain.objects.all()
     table = tables.McDomainTable
+    filterset = McDomainFilterSet
 
 class McDomainEditView(generic.ObjectEditView):
     queryset = models.McDomain.objects.all()
@@ -41,6 +43,7 @@ class McLagView(generic.ObjectView):
 class McLagListView(generic.ObjectListView):
     queryset = models.McLag.objects.all()
     table = tables.McLagTable
+    filterset = McLagFilterSet
 
 class McLagEditView(generic.ObjectEditView):
     queryset = models.McLag.objects.all()

@@ -79,7 +79,12 @@ exit
 {%   for interface in device.interfaces.all() %}
 interface {{ interface.name }}
 {%-     if interface.type == 'lag' %}
-  vpc {{ domain.domain_id }}
+{%-       set mcLagCount = interface.mc_lags.count() -%}
+{%-       if mcLagCount > 1 -%}
+*** ERROR: Cisco vPC only supports each LAG interface being part of a single MC-LAG ***
+{%-       elif mcLagCount == 1 %}
+  vpc {{ interface.mc_lags.get().lag_id }}
+{%-       endif -%}
 {%-     elif interface.lag %}
   channel-group {{ interface.lag.name|replace("Po","") }} mode active
 {%-     endif %}

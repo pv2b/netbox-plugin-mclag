@@ -20,4 +20,18 @@ class McLagInterfaceExtensions(PluginTemplateExtension):
         else:
             return ""
 
-template_extensions = [McLagInterfaceExtensions]
+class McLagDeviceExtensions(PluginTemplateExtension):
+    model="dcim.device"
+    def buttons(self):
+        device = self.context['object']
+
+        mc_domain = device.mc_domains.get()
+
+        if mc_domain:
+            return self.render('netbox_plugin_mclag/device_buttons.html', extra_context={
+                'mc_domain_id': mc_domain.id
+            })
+        else:
+            return ""
+
+template_extensions = [McLagInterfaceExtensions, McLagDeviceExtensions]

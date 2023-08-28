@@ -4,6 +4,7 @@ from netbox.api.serializers import NetBoxModelSerializer, WritableNestedSerializ
 from dcim.api.nested_serializers import NestedDeviceSerializer, NestedInterfaceSerializer
 from ..models import McLag, McDomain
 from dcim.models import Interface
+from ..util import get_interface_label
 
 #
 # Nested serializers
@@ -65,7 +66,7 @@ class McLagSerializer(NetBoxModelSerializer):
 
 class McInterfaceSerializer(NetBoxModelSerializer):
     def get_display(self, interface):
-        return f"{interface.device.name} {interface.name}"
+        return get_interface_label(interface)
     class Meta:
         model = Interface
         fields = ['id', 'display']

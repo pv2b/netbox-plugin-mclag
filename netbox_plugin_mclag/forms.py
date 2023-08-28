@@ -6,6 +6,7 @@ from utilities.forms.widgets import APISelectMultiple
 from dcim.models import Interface
 from .models import McDomain, McLag
 from django.db.models.functions import Concat
+from .util import get_interface_label
 
 class McDomainForm(NetBoxModelForm):
     class Meta:
@@ -14,7 +15,7 @@ class McDomainForm(NetBoxModelForm):
 
 class McInterfaceMultipleChoiceField(DynamicModelMultipleChoiceField):
     def label_from_instance(self, interface):
-        return f"{interface.device.name} {interface.name}"
+        return get_interface_label(interface)
 
 class McLagForm(NetBoxModelForm):
     interfaces = McInterfaceMultipleChoiceField(

@@ -2,7 +2,7 @@
 
 ## WORK IN PROGRESS
 
-This plugin is currently a work in progress and is not currently in a functional state!
+This plugin is currently a work in progress and is currently functional but untested.
 
 ## Description
 
@@ -50,16 +50,43 @@ If more configuration fields beyond an ID are required on the *Multi-Chassis Dom
 
 ## Functionality
 
-The following functionality must be offered by this plugin to create a minimum viable product:
+The following functionality is offered by this plugin to create a minimum viable product:
 
   * The ability to view/create/update/delete *Multi-Chassis Domain* objects through the web UI and by API.
   * The ability to view/create/update/delete *Multi-Chassis Link Aggregation Group* objects through the web UI and by API.
-  * Adds a "MC-LAG" tab to the interface view. This only shows up if the interface's device is part a *Multi-Chassis Domain*. This view will show:
-    * If the interface is a physical interface and has no associated LAG interface, show a descriptive error suggesting the user to create a LAG and add the interface to that LAG first.
-    * If the interface is a LAG, and has no associated physical interface, show a descriptive error suggesting the user to associate local device interfaces to that LAG.
-    * If the LAG on the local device is not connected to a *Multi-Chassis Link Aggregation Group*, show an informative message that informs the user that this LAG is not part of a *Multi-Chassis Link Aggregation Group*. For convenience, still show a list of associated physical interfaces on the local device.
-    * If the LAG on the local device is connected to a *Multi-Chassis Link Aggregation Group*, show cards for the *Multi-Chassis Link Aggregation Group*, and the associated *Multi-Chassis Domain*, along with a list view of associated physical interfaces.
-  * Validated ability to generate vPC configurations for the Cisco Nexus platform, as a proof of completeness of the data model, including a provided template sample for this platform.
+  * Button added to Device view to "Show MC Domain" if a device is associated with an MC Domain
+  * Butten added to Interface fiew to "Show MC-LAG" if an interface is associated with an MC-LAG
+
+## Configuration template example
+
+The following example proof-of-concept template demonstrates that the model contains the required richness to model Cisco VPC. It's incomplete and will require some improvement before it can actually be used for anything:
+
+```jinja2
+{% set domainCount = device.mc_domains.count() %}
+
+{% if domainCount > 1 %}
+*** ERROR: Cisco vPC only supports each switch being part of a single MC-LAG domain! ***
+{% elif domainCount == 1 %}
+{%   set domain = device.mc_domains.get() %}
+feature vpc
+vpc domain {{ domain.domain_id }}
+  peer-keepalive destination 10.1.1.20 source 10.1.1.10 vrf VPC-KEEPALIVE ### TODO Actually populate IP addresses and VRF names here ###
+exit
+
+interface port-channel 1 ### TODO actually figure out correct interface ###
+  vpc peer-link
+exit
+{%   for interface in device.interfaces.all() %}
+interface {{ interface.name }}
+{%-     if interface.type == 'lag' %}
+  vpc {{ domain.domain_id }}
+{%-     elif interface.lag %}
+  channel-group {{ interface.lag.name|replace("Po","") }} mode active
+{%-     endif %}
+exit
+{%   endfor %}
+{% endif %}
+```
 
 ## Acknowledgements and references
 

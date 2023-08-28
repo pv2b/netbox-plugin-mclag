@@ -62,35 +62,29 @@ The following functionality is offered by this plugin to create a minimum viable
 The following example proof-of-concept template demonstrates that the model contains the required richness to model Cisco VPC. It's incomplete and will require some improvement before it can actually be used for anything:
 
 ```jinja2
-{% set domainCount = device.mc_domains.count() %}
-
-{% if domainCount > 1 %}
-*** ERROR: Cisco vPC only supports each switch being part of a single MC-LAG domain! ***
-{% elif domainCount == 1 %}
-{%   set domain = device.mc_domains.get() %}
+{% if device.mc_domains.count() == 1 %}
 feature vpc
-vpc domain {{ domain.domain_id }}
+vpc domain {{ device.mc_domains.get().domain_id }}
   peer-keepalive destination 10.1.1.20 source 10.1.1.10 vrf VPC-KEEPALIVE ### TODO Actually populate IP addresses and VRF names here ###
 exit
 
 interface port-channel 1 ### TODO actually figure out correct interface ###
   vpc peer-link
 exit
-{%   for interface in device.interfaces.all() %}
-interface {{ interface.name }}
-{%-     if interface.type == 'lag' %}
-{%-       set mcLagCount = interface.mc_lags.count() -%}
-{%-       if mcLagCount > 1 -%}
-*** ERROR: Cisco vPC only supports each LAG interface being part of a single MC-LAG ***
-{%-       elif mcLagCount == 1 %}
-  vpc {{ interface.mc_lags.get().lag_id }}
-{%-       endif -%}
-{%-     elif interface.lag %}
-  channel-group {{ interface.lag.name|replace("Po","") }} mode active
-{%-     endif %}
-exit
-{%   endfor %}
 {% endif %}
+
+{%- for interface in device.interfaces.filter(type='lag') %}
+{%-   if interface.mc_lags.count() == 1 %}
+interface {{ interface.name }}
+  vpc {{ interface.mc_lags.get().lag_id }}
+exit
+{%-   endif %}
+{%-  endfor %}
+{% for interface in device.interfaces.filter(lag__isnull=False) %}
+interface {{ interface.name }}
+  channel-group {{ interface.lag.name|replace("Po","") }} mode active
+exit
+{% endfor %}
 ```
 
 ## Acknowledgements and references

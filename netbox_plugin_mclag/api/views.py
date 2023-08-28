@@ -6,7 +6,7 @@ from ..filtersets import McInterfaceFilterSet
 from dcim.models import Interface
 
 class McDomainViewSet(NetBoxModelViewSet):
-    queryset = models.McDomain.objects.prefetch_related('tags')
+    queryset = models.McDomain.objects.prefetch_related('device', 'tags')
     serializer_class = McDomainSerializer
 
 class McLagViewSet(NetBoxModelViewSet):

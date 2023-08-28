@@ -23,6 +23,6 @@ class McInterfaceViewSet(NetBoxReadOnlyModelViewSet):
         ret = super().initialize_request(request, *args, **kwargs)
         self.brief = False
         return ret
-    queryset = Interface.objects.prefetch_related('device')
+    queryset = Interface.objects.filter(type='lag').prefetch_related('device')
     serializer_class = McInterfaceSerializer
     filterset_class = McInterfaceFilterSet

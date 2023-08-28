@@ -19,7 +19,7 @@ class McInterfaceMultipleChoiceField(DynamicModelMultipleChoiceField):
 
 class McLagForm(NetBoxModelForm):
     interfaces = McInterfaceMultipleChoiceField(
-        queryset = Interface.objects.all(),
+        queryset = Interface.objects.filter(type='lag'),
         selector = True,
         query_params = {
             'mc_domain': '$mc_domain',

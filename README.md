@@ -79,12 +79,12 @@ interface {{ interface.name }}
   vpc {{ interface.mc_lags.get().lag_id }}
 exit
 {%-   endif %}
-{%-  endfor %}
-{% for interface in device.interfaces.filter(lag__isnull=False) %}
+{%- endfor %}
+{%  for interface in device.interfaces.filter(lag__isnull=False) %}
 interface {{ interface.name }}
   channel-group {{ interface.lag.name|replace("Po","") }} mode active
 exit
-{% endfor %}
+{%  endfor %}
 ```
 
 ## Acknowledgements and references

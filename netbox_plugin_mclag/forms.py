@@ -12,8 +12,12 @@ class McDomainForm(NetBoxModelForm):
         model = McDomain
         fields = ('name', 'domain_id', 'description', 'devices', 'tags')
 
+class McInterfaceMultipleChoiceField(DynamicModelMultipleChoiceField):
+    def label_from_instance(self, interface):
+        return f"{interface.device.name} {interface.name}"
+
 class McLagForm(NetBoxModelForm):
-    interfaces = DynamicModelMultipleChoiceField(
+    interfaces = McInterfaceMultipleChoiceField(
         queryset = Interface.objects.all(),
         selector = True,
         query_params = {

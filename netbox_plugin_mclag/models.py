@@ -5,7 +5,7 @@ from netbox.models import NetBoxModel
 
 class McDomain(NetBoxModel):
     name = models.CharField(max_length=100)
-    domain_id = models.CharField(max_length=20, blank=True, null=True)
+    domain_id = models.CharField(max_length=20, blank=True, null=True, verbose_name="Domain ID")
     description = models.TextField(max_length=200, blank=True, null=True)
     devices = models.ManyToManyField(
         to='dcim.Device',
@@ -21,12 +21,13 @@ class McDomain(NetBoxModel):
 
 class McLag(NetBoxModel):
     name = models.CharField(max_length=100)
-    lag_id = models.CharField(max_length=20, blank=True, null=True)
+    lag_id = models.CharField(max_length=20, blank=True, null=True, verbose_name="Group ID")
     description = models.TextField(max_length=200, blank=True, null=True)
     mc_domain = models.ForeignKey(
         to=McDomain,
         on_delete=models.CASCADE,
-        related_name="mc_lags"
+        related_name="mc_lags",
+        verbose_name="Multi-Chassis Domain"
     )
     interfaces = models.ManyToManyField(
         to='dcim.Interface',

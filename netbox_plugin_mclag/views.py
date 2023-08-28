@@ -2,9 +2,17 @@ from netbox.views import generic
 from . import forms, models, tables
 from dcim.models import Interface
 from dcim.tables.devices import InterfaceTable
+from .tables import McLagTable
 
 class McDomainView(generic.ObjectView):
     queryset = models.McDomain.objects.all()
+    def get_extra_context(self, request, instance):
+        mclag_table = McLagTable(instance.mc_lags.all())
+        mclag_table.configure(request)
+
+        return {
+            'mclag_table': mclag_table,
+        }
 
 class McDomainListView(generic.ObjectListView):
     queryset = models.McDomain.objects.all()

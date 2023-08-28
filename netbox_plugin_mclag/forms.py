@@ -2,8 +2,10 @@ from django import forms
 
 from netbox.forms import NetBoxModelForm
 from utilities.forms.fields import DynamicModelMultipleChoiceField
+from utilities.forms.widgets import APISelectMultiple
 from dcim.models import Interface
 from .models import McDomain, McLag
+from django.db.models.functions import Concat
 
 class McDomainForm(NetBoxModelForm):
     class Meta:
@@ -15,8 +17,12 @@ class McLagForm(NetBoxModelForm):
         queryset = Interface.objects.all(),
         selector = True,
         query_params = {
-            'device__mc_domains': '$mc_domain'
-        }
+            'mc_domain': '$mc_domain',
+            'brief': 'false'
+        },
+        widget=APISelectMultiple(
+            api_url='/api/plugins/mclag/interfaces/'
+        )
     )
     class Meta:
         model = McLag

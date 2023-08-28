@@ -1,5 +1,6 @@
 from netbox.views import generic
 from . import forms, models, tables
+from dcim.tables.devices import InterfaceTable
 
 class McDomainView(generic.ObjectView):
     queryset = models.McDomain.objects.all()
@@ -17,6 +18,12 @@ class McDomainDeleteView(generic.ObjectDeleteView):
 
 class McLagView(generic.ObjectView):
     queryset = models.McLag.objects.all()
+    def get_extra_context(self, request, instance):
+        table = InterfaceTable(instance.interfaces.all())
+        table.configure(request)
+        return {
+            'interfaces_table': table,
+        }
 
 class McLagListView(generic.ObjectListView):
     queryset = models.McLag.objects.all()

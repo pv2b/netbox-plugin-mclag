@@ -38,9 +38,15 @@
 <div class="row">
     <div class="col col-md-12">
         <div class="card">
-            <h5 class="card-header">Interfaces</h5>
+            <h5 class="card-header">Member LAG Interfaces</h5>
             <div class="card-body table-responsive">
-                {% render_table interfaces_table %}
+                {% render_table lag_interfaces_table %}
+            </div>
+        </div>
+        <div class="card">
+            <h5 class="card-header">Member Physical Interfaces</h5>
+            <div class="card-body table-responsive">
+                {% render_table physical_interfaces_table %}
             </div>
         </div>
     </div>

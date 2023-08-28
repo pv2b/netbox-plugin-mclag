@@ -1,5 +1,6 @@
 from netbox.views import generic
 from . import forms, models, tables
+from dcim.models import Interface
 from dcim.tables.devices import InterfaceTable
 
 class McDomainView(generic.ObjectView):
@@ -19,10 +20,14 @@ class McDomainDeleteView(generic.ObjectDeleteView):
 class McLagView(generic.ObjectView):
     queryset = models.McLag.objects.all()
     def get_extra_context(self, request, instance):
-        table = InterfaceTable(instance.interfaces.all())
-        table.configure(request)
+        lag_interfaces_table = InterfaceTable(instance.interfaces.all())
+        lag_interfaces_table.configure(request)
+
+        physical_interfaces_table = InterfaceTable(Interface.objects.filter(lag__mc_lags=instance))
+        physical_interfaces_table.configure(request)
         return {
-            'interfaces_table': table,
+            'lag_interfaces_table': lag_interfaces_table,
+            'physical_interfaces_table': physical_interfaces_table,
         }
 
 class McLagListView(generic.ObjectListView):

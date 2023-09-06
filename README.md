@@ -1,12 +1,8 @@
 # netbox-plugin-mclag
 
-## WORK IN PROGRESS
-
-This plugin is currently a work in progress and is currently functional but untested.
-
 ## Description
 
-This project aims to create a NetBox Plugin to manage MC-LAG ([Multi-Chassis Link Aggregation Groups](https://en.wikipedia.org/wiki/Multi-chassis_link_aggregation_group)).
+This is a NetBox Plugin to manage MC-LAG ([Multi-Chassis Link Aggregation Groups](https://en.wikipedia.org/wiki/Multi-chassis_link_aggregation_group)).
 
 MC-LAG is a generic name for vendor-specific technologies allowing multiple switches to form a common LAG with a remote system. In the interest of discoverability, here is a list of various vendor-specific names for MC-LAG technologies.
 
@@ -26,11 +22,11 @@ MC-LAG is a generic name for vendor-specific technologies allowing multiple swit
  * Virtual Port Channel (vPC)
  * vLAG
 
-The plugin itself aims be vendor-neutral, and to use vendor-neutral terminology, and to fit most common MC-LAG implementations. Cisco Nexus Virtual Port Channel (vPC) will be used as a sample implementation in examples.
+The plugin itself aims be vendor-neutral, and to use vendor-neutral terminology, and to fit most common MC-LAG implementations. Cisco Nexus Virtual Port Channel (vPC) is used as a sample implementation in examples.
 
 ## Data model
 
-This plugin will creates two new data models, a *Multi-Chassis Domain* and an *Multi-Chassis Link Aggregation Group*.
+This plugin creates two new data models, a *Multi-Chassis Domain* and an *Multi-Chassis Link Aggregation Group*.
 
 A *Multi-Chassis Domain* groups two or more devices that participate in creating a *Multi-Chassis Link Aggregation Group*. Optionally, a *Domain ID* may be added here to hold any vendor-specific ID required for configuration of the domain.
 
@@ -50,7 +46,7 @@ If more configuration fields beyond an ID are required on the *Multi-Chassis Dom
 
 ## Functionality
 
-The following functionality is offered by this plugin to create a minimum viable product:
+The following functionality is currently offered by this plugin:
 
   * The ability to view/create/update/delete *Multi-Chassis Domain* objects through the web UI and by API.
   * The ability to view/create/update/delete *Multi-Chassis Link Aggregation Group* objects through the web UI and by API.

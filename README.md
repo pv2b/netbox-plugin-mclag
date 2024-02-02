@@ -91,3 +91,41 @@ The following materials were instrumental in developing this plugin:
  * The [Plugins Development](https://docs.netbox.dev/en/stable/plugins/development/) chapter of the NetBox documentation.
  * The Wikipedia page for [Multi-Chassis Link Aggregation Groups](https://en.wikipedia.org/wiki/Multi-chassis_link_aggregation_group)
  * The [Virtual Port Channels](https://www.ciscopress.com/articles/article.asp?p=3150966&seqNum=2) section of the [Port Channels and vPCs chapter](https://www.ciscopress.com/articles/article.asp?p=3150966) from the [Cisco Data Center Fundamentals](https://www.ciscopress.com/store/cisco-data-center-fundamentals-9780137638246) by [Somit Maloo](https://www.ciscopress.com/authors/bio/75b726d0-f107-4c19-98bd-77d9f3558184) and [Iskren Nikolov](https://www.ciscopress.com/authors/bio/301612bc-152f-4827-b31e-ab7a1dd35c61), published by [Cisco Press](https://www.ciscopress.com/).
+
+##  Installation
+
+Navigate to the directory you wish to download the plugin for this exemple we will use the ```/opt/netbox-plugin``` if the directory is not already created you can create it using ```mkdir /opt/netbox-plugin```.
+
+Once the directory is created use ```cd /opt/netbox-plugin```
+
+You will then need to clone the directory using git clone
+
+```git clone https://github.com/pv2b/netbox-plugin-mclag.git```
+
+This will download the repo containing the plugin to your current working directory.
+
+You will then need to activate your venv for netbox :
+
+```source /opt/netbox/venv/bin/activate```
+
+You can then run the setup to install your plugin using the following command :
+
+```python3 setup.py install```
+
+This will install the plugin for you.
+
+You then need to edit your netbox configuration file to add the plugin to your netbox configuration adding this line :
+
+```
+PLUGINS = [
+  'netbox_plugin_mclag',
+]
+```
+
+You will need to navigate to ```/opt/netbox/netbox``` or the location of your file ```manage.py``` then execute a database migration : 
+
+```python3 manage.py migrate```
+
+You will then need to restart your netbox instance :
+
+```systemctl restart netbox netbox-rq```

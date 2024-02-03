@@ -83,6 +83,96 @@ exit
 {%  endfor %}
 ```
 
+## Installation
+
+Navigate to the directory you wish to download the plugin into. For this example, we will use ```/opt/netbox-plugin```. If the directory is not already created, you can create it using ```mkdir /opt/netbox-plugin```.
+
+Once the directory is created, use ```cd /opt/netbox-plugin``` to enter it.
+
+You will then need to clone the repository using git clone.
+
+```git clone https://github.com/pv2b/netbox-plugin-mclag.git```
+
+This will download the repo containing the plugin to your current working directory. Use ```cd netbox-plugin-mclag``` to enter that directory.
+
+Before installing the plugin, you will then need to activate your venv for Netbox (make sure to use the correct path for your Netbox installation):
+
+```source /opt/netbox/venv/bin/activate```
+
+You can then run the setup to install your plugin using the following command :
+
+```python3 setup.py install```
+
+This will install the plugin for you inside of Netbox's virtual environment (venv).
+
+You then need to edit your Netbox configuration file (```/opt/netbox/netbox/netbox/configuration.py```) to add the plugin to your Netbox configuration adding ```netbox_plugin_mclag``` to the ```PLUGINS``` list as per this example below:
+
+```python
+PLUGINS = [
+  'netbox_plugin_mclag',
+]
+```
+
+Finally, you'll need to execute a database migration to extend the database with the required schema to support this plugin. You will need to navigate to the ```netbox``` subdirectory of your Netbox install directory (e.g. ```/opt/netbox/netbox``` and then execute a database migration:
+
+```python3 manage.py migrate```
+
+Finally, you will then need to restart your Netbox instance.
+
+```systemctl restart netbox netbox-rq```
+
+## Configuration (optional)
+
+By default, the MC-LAG plugin will live under the Plugins menu. If you'd prefer it to have its own menu, you can do that by setting the PLUGIN_OPTIONS in your Netbox configuration file (e.g. ```/opt/netbox/netbox/netbox/configuration.py```) like this:
+
+```python
+PLUGINS_CONFIG = {
+    'netbox_plugin_mclag': {
+        'top_level_menu': True
+    }
+}
+```
+
+## Uninstallation
+
+If you decide the plugin isn't for you and you want to remove it, this is how.
+
+### Reverting the database migrations (optional)
+
+If you intend to uninstall ```netbox-plugin-mclag```, you may want to revert the database migrations that this plugin adds. Note: Reverting these migrations will remove any data associated with the plugin. This has to be done before uninstalling the plugin.
+
+Removing the data is not strictly neccessary, but there have been bugs in Netbox in the past that have broken features if data from uninstalled plugins remains in the database, so it might be a good idea to do it.
+
+Manually editing the postgresql database is not recommended, because it may leave migrations out of sync with the actual schema, so instead, to remove the data, the best way is to roll back the migration. This has to be done prior to uninstalling the plugin!
+
+Because this command has the potential for data loss, I strongly recommend you backup the database before running these steps.
+
+First, activate the Netbox virtual environment:
+
+```source /opt/netbox/venv/bin/activate``` (substituting the correct path for your install)
+
+Then, revert the migrations for netbox_plugin_mclag:
+
+```python /opt/netbox/netbox/manage.py migrate netbox_plugin_mclag zero``` (again, substituting the correct path for your install)
+
+### Disabling the plugin in the Netbox configuration
+
+Edit your Netbox configuration file (e.g. ```/opt/netbox/netbox/netbox/configuration.py```) to remove ```netbox_plugin_mclag``` from the ```PLUGINS``` list.
+
+After this, you can restart Netbox to make sure the plugin is no longer loaded.
+
+```systemctl restart netbox netbox-rq```
+
+### Removing the plugin (optional)
+
+Activate your Netbox virtual environment:
+
+```source /opt/netbox/venv/bin/activate``` (substituting the correct path for your install)
+
+Use pip to uninstall the plugin.
+
+```pip uninstall netbox-plugin-mclag```
+
 ## Acknowledgements and references
 
 The following materials were instrumental in developing this plugin:

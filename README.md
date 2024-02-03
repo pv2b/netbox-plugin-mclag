@@ -107,7 +107,7 @@ This will install the plugin for you inside of Netbox's virtual environment (ven
 
 You then need to edit your Netbox configuration file (```/opt/netbox/netbox/netbox/configuration.py```) to add the plugin to your Netbox configuration adding ```netbox_plugin_mclag``` to the ```PLUGINS``` list as per this example below:
 
-```
+```python
 PLUGINS = [
   'netbox_plugin_mclag',
 ]
@@ -120,6 +120,18 @@ Finally, you'll need to execute a database migration to extend the database with
 Finally, you will then need to restart your Netbox instance.
 
 ```systemctl restart netbox netbox-rq```
+
+## Configuration (optional)
+
+By default, the MC-LAG plugin will live under the Plugins menu. If you'd prefer it to have its own menu, you can do that by setting the PLUGIN_OPTIONS in your Netbox configuration file (e.g. ```/opt/netbox/netbox/netbox/configuration.py```) like this:
+
+```python
+PLUGINS_CONFIG = {
+    'netbox_plugin_mclag': {
+        'top_level_menu': True
+    }
+}
+```
 
 ## Uninstallation
 

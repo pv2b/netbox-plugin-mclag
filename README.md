@@ -83,6 +83,12 @@ exit
 {%  endfor %}
 ```
 
+## Supported versions
+
+The `netbox-plugin-mclag` plugin has been developed for Netbox 3.6, and is not supported on older versions. If it works on older versions, it's purely by accident. I will not put in any work to make it work on older versions.
+
+The plugin has been developed for Python 3.11, but I expect it to work with any Python version supported by Netbox.
+
 ## Installation
 
 Navigate to the directory you wish to download the plugin into. For this example, we will use ```/opt/netbox-plugin```. If the directory is not already created, you can create it using ```mkdir /opt/netbox-plugin```.

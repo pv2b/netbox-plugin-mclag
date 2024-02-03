@@ -51,7 +51,7 @@ The following functionality is currently offered by this plugin:
   * The ability to view/create/update/delete *Multi-Chassis Domain* objects through the web UI and by API.
   * The ability to view/create/update/delete *Multi-Chassis Link Aggregation Group* objects through the web UI and by API.
   * Button added to Device view to "Show MC Domain" if a device is associated with an MC Domain
-  * Butten added to Interface fiew to "Show MC-LAG" if an interface is associated with an MC-LAG
+  * Button added to Interface view to "Show MC-LAG" if an interface is associated with an MC-LAG
 
 ## Configuration template example
 

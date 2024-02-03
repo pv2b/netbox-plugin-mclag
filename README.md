@@ -83,15 +83,6 @@ exit
 {%  endfor %}
 ```
 
-## Acknowledgements and references
-
-The following materials were instrumental in developing this plugin:
-
- * The [NetBox Plugin Development Tutorial](https://github.com/netbox-community/netbox-plugin-tutorial)
- * The [Plugins Development](https://docs.netbox.dev/en/stable/plugins/development/) chapter of the NetBox documentation.
- * The Wikipedia page for [Multi-Chassis Link Aggregation Groups](https://en.wikipedia.org/wiki/Multi-chassis_link_aggregation_group)
- * The [Virtual Port Channels](https://www.ciscopress.com/articles/article.asp?p=3150966&seqNum=2) section of the [Port Channels and vPCs chapter](https://www.ciscopress.com/articles/article.asp?p=3150966) from the [Cisco Data Center Fundamentals](https://www.ciscopress.com/store/cisco-data-center-fundamentals-9780137638246) by [Somit Maloo](https://www.ciscopress.com/authors/bio/75b726d0-f107-4c19-98bd-77d9f3558184) and [Iskren Nikolov](https://www.ciscopress.com/authors/bio/301612bc-152f-4827-b31e-ab7a1dd35c61), published by [Cisco Press](https://www.ciscopress.com/).
-
 ## Installation
 
 Navigate to the directory you wish to download the plugin into. For this example, we will use ```/opt/netbox-plugin```. If the directory is not already created, you can create it using ```mkdir /opt/netbox-plugin```.
@@ -169,3 +160,12 @@ Activate your Netbox virtual environment:
 Use pip to uninstall the plugin.
 
 ```pip uninstall netbox-plugin-mclag```
+
+## Acknowledgements and references
+
+The following materials were instrumental in developing this plugin:
+
+ * The [NetBox Plugin Development Tutorial](https://github.com/netbox-community/netbox-plugin-tutorial)
+ * The [Plugins Development](https://docs.netbox.dev/en/stable/plugins/development/) chapter of the NetBox documentation.
+ * The Wikipedia page for [Multi-Chassis Link Aggregation Groups](https://en.wikipedia.org/wiki/Multi-chassis_link_aggregation_group)
+ * The [Virtual Port Channels](https://www.ciscopress.com/articles/article.asp?p=3150966&seqNum=2) section of the [Port Channels and vPCs chapter](https://www.ciscopress.com/articles/article.asp?p=3150966) from the [Cisco Data Center Fundamentals](https://www.ciscopress.com/store/cisco-data-center-fundamentals-9780137638246) by [Somit Maloo](https://www.ciscopress.com/authors/bio/75b726d0-f107-4c19-98bd-77d9f3558184) and [Iskren Nikolov](https://www.ciscopress.com/authors/bio/301612bc-152f-4827-b31e-ab7a1dd35c61), published by [Cisco Press](https://www.ciscopress.com/).

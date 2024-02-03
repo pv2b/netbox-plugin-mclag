@@ -92,19 +92,19 @@ The following materials were instrumental in developing this plugin:
  * The Wikipedia page for [Multi-Chassis Link Aggregation Groups](https://en.wikipedia.org/wiki/Multi-chassis_link_aggregation_group)
  * The [Virtual Port Channels](https://www.ciscopress.com/articles/article.asp?p=3150966&seqNum=2) section of the [Port Channels and vPCs chapter](https://www.ciscopress.com/articles/article.asp?p=3150966) from the [Cisco Data Center Fundamentals](https://www.ciscopress.com/store/cisco-data-center-fundamentals-9780137638246) by [Somit Maloo](https://www.ciscopress.com/authors/bio/75b726d0-f107-4c19-98bd-77d9f3558184) and [Iskren Nikolov](https://www.ciscopress.com/authors/bio/301612bc-152f-4827-b31e-ab7a1dd35c61), published by [Cisco Press](https://www.ciscopress.com/).
 
-##  Installation
+## Installation
 
-Navigate to the directory you wish to download the plugin for this exemple we will use the ```/opt/netbox-plugin``` if the directory is not already created you can create it using ```mkdir /opt/netbox-plugin```.
+Navigate to the directory you wish to download the plugin into. For this example, we will use ```/opt/netbox-plugin```. If the directory is not already created, you can create it using ```mkdir /opt/netbox-plugin```.
 
-Once the directory is created use ```cd /opt/netbox-plugin```
+Once the directory is created, use ```cd /opt/netbox-plugin``` to enter it.
 
-You will then need to clone the directory using git clone
+You will then need to clone the repository using git clone.
 
 ```git clone https://github.com/pv2b/netbox-plugin-mclag.git```
 
-This will download the repo containing the plugin to your current working directory.
+This will download the repo containing the plugin to your current working directory. Use ```cd netbox-plugin-mclag``` to enter that directory.
 
-You will then need to activate your venv for netbox :
+Before installing the plugin, you will then need to activate your venv for Netbox (make sure to use the correct path for your Netbox installation):
 
 ```source /opt/netbox/venv/bin/activate```
 
@@ -112,9 +112,9 @@ You can then run the setup to install your plugin using the following command :
 
 ```python3 setup.py install```
 
-This will install the plugin for you.
+This will install the plugin for you inside of Netbox's virtual environment (venv).
 
-You then need to edit your netbox configuration file to add the plugin to your netbox configuration adding this line :
+You then need to edit your Netbox configuration file (```/opt/netbox/netbox/netbox/configuration.py```) to add the plugin to your Netbox configuration adding ```netbox_plugin_mclag``` to the ```PLUGINS``` list as per this example below:
 
 ```
 PLUGINS = [
@@ -122,10 +122,10 @@ PLUGINS = [
 ]
 ```
 
-You will need to navigate to ```/opt/netbox/netbox``` or the location of your file ```manage.py``` then execute a database migration : 
+Finally, you'll need to execute a database migration to extend the database with the required schema to support this plugin. You will need to navigate to the ```netbox``` subdirectory of your Netbox install directory (e.g. ```/opt/netbox/netbox``` and then execute a database migration:
 
 ```python3 manage.py migrate```
 
-You will then need to restart your netbox instance :
+Finally, you will then need to restart your Netbox instance.
 
 ```systemctl restart netbox netbox-rq```

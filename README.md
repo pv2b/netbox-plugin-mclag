@@ -129,3 +129,43 @@ Finally, you'll need to execute a database migration to extend the database with
 Finally, you will then need to restart your Netbox instance.
 
 ```systemctl restart netbox netbox-rq```
+
+## Uninstallation
+
+If you decide the plugin isn't for you and you want to remove it, this is how.
+
+### Reverting the database migrations (optional)
+
+If you intend to uninstall ```netbox-plugin-mclag```, you may want to revert the database migrations that this plugin adds. Note: Reverting these migrations will remove any data associated with the plugin. This has to be done before uninstalling the plugin.
+
+Removing the data is not strictly neccessary, but there have been bugs in Netbox in the past that have broken features if data from uninstalled plugins remains in the database, so it might be a good idea to do it.
+
+Manually editing the postgresql database is not recommended, because it may leave migrations out of sync with the actual schema, so instead, to remove the data, the best way is to roll back the migration. This has to be done prior to uninstalling the plugin!
+
+Because this command has the potential for data loss, I strongly recommend you backup the database before running these steps.
+
+First, activate the Netbox virtual environment:
+
+```source /opt/netbox/venv/bin/activate``` (substituting the correct path for your install)
+
+Then, revert the migrations for netbox_plugin_mclag:
+
+```python /opt/netbox/netbox/manage.py migrate netbox_plugin_mclag zero``` (again, substituting the correct path for your install)
+
+### Disabling the plugin in the Netbox configuration
+
+Edit your Netbox configuration file (e.g. ```/opt/netbox/netbox/netbox/configuration.py```) to remove ```netbox_plugin_mclag``` from the ```PLUGINS``` list.
+
+After this, you can restart Netbox to make sure the plugin is no longer loaded.
+
+```systemctl restart netbox netbox-rq```
+
+### Removing the plugin (optional)
+
+Activate your Netbox virtual environment:
+
+```source /opt/netbox/venv/bin/activate``` (substituting the correct path for your install)
+
+Use pip to uninstall the plugin.
+
+```pip uninstall netbox-plugin-mclag```

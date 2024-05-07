@@ -1,14 +1,12 @@
 from django.conf import settings
 from netbox.plugins import PluginMenuButton, PluginMenuItem, PluginMenu
-from utilities.choices import ButtonColorChoices
 
 
 mc_domain_buttons = [
     PluginMenuButton(
         link="plugins:netbox_plugin_mclag:mcdomain_add",
         title="Add",
-        icon_class="mdi mdi-plus-thick",
-        color=ButtonColorChoices.GREEN,
+        icon_class="mdi mdi-plus-thick"
     )
 ]
 
@@ -16,8 +14,7 @@ mc_lag_buttons = [
     PluginMenuButton(
         link="plugins:netbox_plugin_mclag:mclag_add",
         title="Add",
-        icon_class="mdi mdi-plus-thick",
-        color=ButtonColorChoices.GREEN,
+        icon_class="mdi mdi-plus-thick"
     )
 ]
 

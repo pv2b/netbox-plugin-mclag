@@ -1,4 +1,4 @@
-from extras.plugins import PluginTemplateExtension
+from netbox.plugins import PluginTemplateExtension
 from .models import McDomain, McLag
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 

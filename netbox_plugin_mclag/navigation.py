@@ -1,42 +1,39 @@
 from django.conf import settings
-from extras.plugins import PluginMenuButton, PluginMenuItem, PluginMenu
-from utilities.choices import ButtonColorChoices
+from netbox.plugins import PluginMenuButton, PluginMenuItem, PluginMenu
 
 
 mc_domain_buttons = [
     PluginMenuButton(
-        link='plugins:netbox_plugin_mclag:mcdomain_add',
-        title='Add',
-        icon_class='mdi mdi-plus-thick',
-        color=ButtonColorChoices.GREEN
+        link="plugins:netbox_plugin_mclag:mcdomain_add",
+        title="Add",
+        icon_class="mdi mdi-plus-thick"
     )
 ]
 
 mc_lag_buttons = [
     PluginMenuButton(
-        link='plugins:netbox_plugin_mclag:mclag_add',
-        title='Add',
-        icon_class='mdi mdi-plus-thick',
-        color=ButtonColorChoices.GREEN
+        link="plugins:netbox_plugin_mclag:mclag_add",
+        title="Add",
+        icon_class="mdi mdi-plus-thick"
     )
 ]
 
 _menu_items = (
     PluginMenuItem(
-        link='plugins:netbox_plugin_mclag:mcdomain_list',
-        link_text='Multi-Chassis Domains',
-        buttons=mc_domain_buttons
+        link="plugins:netbox_plugin_mclag:mcdomain_list",
+        link_text="Multi-Chassis Domains",
+        buttons=mc_domain_buttons,
     ),
     PluginMenuItem(
-        link='plugins:netbox_plugin_mclag:mclag_list',
-        link_text='Multi-Chassis LAGs',
-        buttons=mc_lag_buttons
+        link="plugins:netbox_plugin_mclag:mclag_list",
+        link_text="Multi-Chassis LAGs",
+        buttons=mc_lag_buttons,
     ),
 )
 
-plugin_settings = settings.PLUGINS_CONFIG.get('netbox_plugin_mclag', {})
+plugin_settings = settings.PLUGINS_CONFIG.get("netbox_plugin_mclag", {})
 
-if plugin_settings.get('top_level_menu'):
+if plugin_settings.get("top_level_menu"):
     menu = PluginMenu(
         label="MC-LAG",
         groups=(("MC-LAG", _menu_items),),

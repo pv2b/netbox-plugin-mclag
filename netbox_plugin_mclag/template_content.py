@@ -2,12 +2,14 @@ from extras.plugins import PluginTemplateExtension
 from .models import McDomain, McLag
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 
-class McLagInterfaceExtensions(PluginTemplateExtension):
-    model="dcim.interface"
-    def buttons(self):
-        interface = self.context['object']
 
-        if interface.type != 'lag':
+class McLagInterfaceExtensions(PluginTemplateExtension):
+    model = "dcim.interface"
+
+    def buttons(self):
+        interface = self.context["object"]
+
+        if interface.type != "lag":
             interface = interface.lag
 
         if interface is None:
@@ -24,16 +26,17 @@ class McLagInterfaceExtensions(PluginTemplateExtension):
         except ObjectDoesNotExist:
             return ""
 
-        return self.render('netbox_plugin_mclag/button.html', extra_context={
-            'url': url,
-            'title': title
-        })
+        return self.render(
+            "netbox_plugin_mclag/button.html",
+            extra_context={"url": url, "title": title},
+        )
 
 
 class McLagDeviceExtensions(PluginTemplateExtension):
-    model="dcim.device"
+    model = "dcim.device"
+
     def buttons(self):
-        device = self.context['object']
+        device = self.context["object"]
 
         try:
             mc_domain = device.mc_domains.get()
@@ -45,9 +48,10 @@ class McLagDeviceExtensions(PluginTemplateExtension):
         except ObjectDoesNotExist:
             return ""
 
-        return self.render('netbox_plugin_mclag/button.html', extra_context={
-            'url': url,
-            'title': title
-        })
+        return self.render(
+            "netbox_plugin_mclag/button.html",
+            extra_context={"url": url, "title": title},
+        )
+
 
 template_extensions = [McLagInterfaceExtensions, McLagDeviceExtensions]

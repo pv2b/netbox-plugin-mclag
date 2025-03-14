@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from netbox.api.serializers import NetBoxModelSerializer, WritableNestedSerializer
-from dcim.api.nested_serializers import NestedDeviceSerializer, NestedInterfaceSerializer
+from dcim.api.serializers import DeviceSerializer, InterfaceSerializer
 from ..models import McLag, McDomain
 from dcim.models import Interface
 from ..util import get_interface_label
@@ -14,7 +14,7 @@ class NestedMcDomainSerializer(WritableNestedSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name='plugins-api:netbox_plugin_mclag-api:mcdomain-detail'
     )
-    devices = NestedDeviceSerializer(many=True)
+    devices = DeviceSerializer(nested=True, many=True)
 
     class Meta:
         model = McDomain
@@ -25,7 +25,7 @@ class NestedMcLagSerializer(WritableNestedSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name='plugins-api:netbox_plugin_mclag-api:mclag-detail'
     )
-    interfaces = NestedInterfaceSerializer(many=True)
+    interfaces = InterfaceSerializer(nested=True, many=True)
 
     class Meta:
         model = McLag
@@ -40,7 +40,7 @@ class McDomainSerializer(NetBoxModelSerializer):
         view_name='plugins-api:netbox_plugin_mclag-api:mcdomain-detail'
     )
     mc_lags = NestedMcLagSerializer(many=True)
-    devices = NestedDeviceSerializer(many=True)
+    devices = DeviceSerializer(nested=True, many=True)
 
     class Meta:
         model = McDomain
@@ -55,7 +55,7 @@ class McLagSerializer(NetBoxModelSerializer):
         view_name='plugins-api:netbox_plugin_mclag-api:mclag-detail'
     )
     mc_domain = NestedMcDomainSerializer()
-    interfaces = NestedInterfaceSerializer(many=True)
+    interfaces = InterfaceSerializer(nested=True, many=True)
 
     class Meta:
         model = McLag

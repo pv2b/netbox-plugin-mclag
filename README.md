@@ -85,7 +85,7 @@ exit
 
 ## Supported versions
 
-The current version of the  `netbox-plugin-mclag` plugin has been developed for Netbox 4.0. and is not supported on older versions.
+The current version of the  `netbox-plugin-mclag` plugin has been developed for Netbox 4.2. and is not supported on older versions.
 
 The plugin has been developed for Python 3.12.3, but I expect it to work with any Python version supported by Netbox.
 
